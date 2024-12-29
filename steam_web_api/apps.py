@@ -167,6 +167,30 @@ class Apps:
 
         return response
 
+    # https://api.steampowered.com/IPublishedFileService/GetUserFiles/v1/?key=abc123&filetype=4&numperpage=10&steamid=abc123
+    #TODO: Find all possible arguments
+    def get_user_files(self, steamid: int, filetype: int, numperpage: int, page: int) -> dict:
+        """
+        Searches for files uploaded by a user
+
+        Args:
+            steamid (int): Steam 64 ID
+            filetype (int): File type (4 is screenshots)
+            numperpage (int): Number of files per page
+            page (int): Page number
+
+        Returns:
+            dict: JSON response
+        """
+        params = {
+            "steamid": steamid,
+            "filetype": filetype,
+            "numperpage": numperpage,
+            "page": page,
+        }
+        response = self.__client.request("get", "/IPublishedFileService/GetUserFiles/v1/", params=params)
+        return response
+
     # Is term meant to be any or a string, I'm not familiar enough with steam search so I'll leave it as is
     def search_games(self, term, country="US"):
         """Searches for games using the information given
